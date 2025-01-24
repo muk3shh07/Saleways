@@ -16,6 +16,11 @@ from .models import (
 )
 
 
+class PasswordChangeSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
 class UserSerializer(serializers.ModelSerializer):
     # custom fields to be serialized.
     name = serializers.SerializerMethodField(read_only=True)
@@ -64,12 +69,6 @@ class UserSerializerWithToken(UserSerializer):
         return str(token.access_token)
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = ["product", "user", "name", "createdAt", "rating", "comment"]
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -109,11 +108,6 @@ class DiscountOffersSerializer(serializers.ModelSerializer):
         model = DiscountOffers
         fields = "__all__"  # Include all fields
 
-    # def to_representation(self, instance):
-    #     response = super().to_representation(instance)
-    #     response["is_active"] = instance.is_active()  # Add a field for active status
-    #     return response
-
 
 class ProductSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField(read_only=True)
@@ -140,10 +134,34 @@ class ProductSerializer(serializers.ModelSerializer):
     #     return ColorSerializer(colors, many=True).data
 
 
+class ProductCreateUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = [
+            "name",
+            "thumbnail",
+            "brand",
+            "size",
+            "colors",
+            "categories",
+            "description",
+            "price",
+            "countInStock",
+            "badge",
+        ]
+
+
 class ImageAlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageAlbum
         fields = "__all__"
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ["product", "user", "name", "createdAt", "rating", "comment"]
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
