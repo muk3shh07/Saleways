@@ -20,6 +20,8 @@ from django.urls import path , include
 urlpatterns = [
         path('admin/', admin.site.urls),
         path('api/users/', include('Mbase.Url.user_urls')),
+        path('api/product/', include('Mbase.Url.product_urls')),
+        path('api/order/', include('Mbase.Url.order_urls')),
 ]
 
 from django.conf import settings
