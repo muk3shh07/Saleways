@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "whitenoise",
-    "django_password",
     "django_rest_passwordreset",
     "Mbase",
 ]
